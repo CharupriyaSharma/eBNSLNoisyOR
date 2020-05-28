@@ -1,0 +1,12 @@
+Disease,Fallot -> 1,PAIVS -> 0
+Age, 0-3_days -> 1, 4-10_days, 11-30_days -> 0
+LungFlow, normal -> 1, Low -> 0
+LungParench, normal -> 1, Congested -> 0
+CardiacMixing, Complete -> 1, 0ne -> 0
+DuctFlow, Lt_to_Rt -> 1, 0ne -> 0
+ChestXray, normal -> 1, Oligaemic -> 0
+CO2, 0rmal -> 1, High -> 0
+HypoxiaI02, Moderate -> 1, Severe -> 0
+HypDistrib, Equal -> 1, Unequal -> 0
+LowerBodyO2, <5 -> 1, 5-12, 12+ -> 0
+RUQO2, <5 -> 1, 5-12, 12+ -> 0

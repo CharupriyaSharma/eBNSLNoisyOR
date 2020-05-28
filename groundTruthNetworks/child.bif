@@ -1,0 +1,153 @@
+network unknown {
+}
+variable v0 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v1 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v2 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v3 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v4 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v5 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v6 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v7 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v8 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v9 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v10 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v11 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v12 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v13 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v14 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v15 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v16 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v17 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v18 {
+  type discrete [ 3 ] { 1, 0 };
+}
+variable v19 {
+  type discrete [ 2 ] { 1, 0 };
+}
+probability ( v0 ) {
+  table 0.1, 0.9;
+}
+probability ( v1 | v15, v16 ) {
+  (1, 0) 0.95, 0.05;
+  (0, 0) 0.95, 0.05;
+  (1, 1) 0.95, 0.05;
+  (0, 1) 0.95, 0.05;
+}
+probability ( v2 | v16, v17 ) {
+  (0, 1) 0.98, 0.02;
+  (1, 1) 0.8, 0.2;
+  (0, 0) 0.95, 0.05;
+  (1, 0) 0.70, 0.30;
+}
+probability ( v3 | v17 ) {
+  (1) 0.8, 0.2;
+  (0) 0.65, 0.35;
+}
+probability ( v4 | v17, v18 ) {
+  (1, 1) 0.90, 0.10;
+  (0, 1) 0.05, 0.95;
+  (1, 0) 0.14, 0.86;
+  (0, 0) 0.05, 0.95;
+}
+probability ( v5 | v17, v19 ) {
+  (1, 1) 0.2, 0.8;
+  (0, 1) 0.4, 0.6;
+  (1, 0) 0.05, 0.95;
+  (0, 0) 0.2, 0.8;
+}
+probability ( v6 | v14 ) {
+  (1) 0.9, 0.1;
+  (0) 0.05, 0.95;
+}
+probability ( v7 | v1, v2 ) {
+  (1, 1) 0.3, 0.7;
+  (0, 1) 0.50, 0.50;
+  (1, 0) 0.5, 0.5;
+  (0, 0) 0.60, 0.40;
+}
+probability ( v8 | v2 ) {
+  (1) 0.3, 0.7;
+  (0) 0.5, 0.5;
+}
+probability ( v9 | v3 ) {
+  (1) 0.9, 0.1;
+  (0) 0.1, 0.9;
+}
+probability ( v10 | v4 ) {
+  (1) 0.80, 0.20;
+  (0) 0.10, 0.90;
+}
+probability ( v11 | v0 ) {
+  (1) 0.25, 0.75;
+  (0) 0.29591837, 0.70408163;
+}
+probability ( v12 | v5 ) {
+  (1) 0.8, 0.2;
+  (0) 0.1, 0.9;
+}
+probability ( v13 | v11, v19 ) {
+  (1, 1) 0.70, 0.30;
+  (0, 1) 0.80, 0.20;
+  (1, 0) 0.25, 0.75;
+  (0, 0) 0.80, 0.20;
+}
+probability ( v14 | v11 ) {
+  (1) 0.1, 0.9;
+  (0) 0.9, 0.1;
+}
+probability ( v15 | v11 ) {
+  (1) 0.8, 0.2;
+  (0) 1.0, 0.0;
+}
+probability ( v16 | v11 ) {
+  (1) 0.80, 0.20;
+  (0) 0.95, 0.05;
+}
+probability ( v17 | v11 ) {
+  (1) 0.80, 0.20;
+  (0) 0.80, 0.20;
+}
+probability ( v18 | v11 ) {
+  (1) 0.15, 0.85;
+  (0) 0.10, 0.90;
+}
+probability ( v19 | v11 ) {
+  (1) 0.2, 0.8;
+  (0) 0.3, 0.7;
+}

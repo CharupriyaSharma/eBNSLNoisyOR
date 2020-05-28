@@ -1,0 +1,6 @@
+young, adult -> 1; old -> 0
+M -> 1; F -> 0
+high -> 1; uni -> 0
+emp -> 1; self -> 0
+small -> 1; big -> 0
+car, other -> 1; train -> 0

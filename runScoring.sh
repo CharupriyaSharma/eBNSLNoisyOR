@@ -8,7 +8,7 @@ for filename in CSV/*.csv; do
         
                 for((i=0; i<$col; i++ )); do   
                        
-                        python3 score.py  $filename $i $dataset 150  &
+                        python3 NoisyORScore.py  $filename $i $dataset 150  &
            		wait
 			echo $dataset $i 
                 done

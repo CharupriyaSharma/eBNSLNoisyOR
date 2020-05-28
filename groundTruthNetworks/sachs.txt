@@ -1,0 +1,1 @@
+All Vars,LOW -> 0,AVG & HIGH -> 1

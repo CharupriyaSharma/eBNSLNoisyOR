@@ -1,0 +1,46 @@
+network unknown {
+}
+variable v0 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v1 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v2 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v3 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v4 {
+  type discrete [ 2 ] { 1, 0 };
+}
+variable v5 {
+  type discrete [ 2 ] { 1, 0 };
+}
+probability ( v0 ) {
+  table 0.8, 0.2;
+}
+probability ( v1 ) {
+  table 0.6, 0.4;
+}
+probability ( v2 | v0, v1 ) {
+  (1, 1) 0.75, 0.25;
+  (0, 1) 0.88, 0.12;
+  (1, 0) 0.64, 0.36;
+  (0, 0) 0.9, 0.1;
+}
+probability ( v3 | v2 ) {
+  (1) 0.96, 0.04;
+  (0) 0.92, 0.08;
+}
+probability ( v4 | v2 ) {
+  (1) 0.25, 0.75;
+  (0) 0.2, 0.8;
+}
+probability ( v5 | v3, v4 ) {
+  (1, 1) 0.58, 0.42;
+  (0, 1) 0.64, 0.36;
+  (1, 0) 0.76, 0.24;
+  (0, 0) 0.79, 0.21;
+}
