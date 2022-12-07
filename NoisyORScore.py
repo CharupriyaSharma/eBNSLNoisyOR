@@ -692,6 +692,7 @@ def pruneTKextended():
     return 0
 
 def scoreParentSet(childNodeIndex, candidateParentSet, data, startPoint):
+    print(candidateParentSet)
     cpd = data.computeCPD(childNodeIndex, candidateParentSet)
 
     objectiveKL = generateKL(cpd, childNodeIndex, candidateParentSet)
@@ -731,11 +732,12 @@ def scoreParentSet(childNodeIndex, candidateParentSet, data, startPoint):
 
     ####gradientDescentLL = GradientDescent(objectiveLL, gradientsLL)
     ###gresultLL = gradientDescentLL.descent(startPointLL)
-    #print(gresultLL)
+    #print(gresultKL)
     
     llTermOfBic = objectiveLL.evaluate(gresultKL)
     penalty = (2**len(candidateParentSet))*log(data.numberOfRows)/2 #penalty
-    #print(llTermOfBic, penalty)
+    print(llTermOfBic+ penalty)
+    #print(llTermOfBic)
     return llTermOfBic+penalty, gresultKL
     
 
@@ -743,6 +745,7 @@ def scoreParentSet(childNodeIndex, candidateParentSet, data, startPoint):
 def checkAdditionToPoisoned(poisoned, candidateParentSet, bic, data, maxSize):
     sizeHorizon = ceil(log(2*bic/log(data.numberOfRows)))
     if (sizeHorizon < maxSize):
+        print("poisoned")
         poisoned[toNumber(candidateParentSet)] = sizeHorizon
 
 def sublist(ls1, ls2):
@@ -810,6 +813,7 @@ def scoreNode(childNodeIndex, data, maxSize):
             if notPoisoned(candidateParentSet, poisoned):
                 
                 bic = scoreParentSet(childNodeIndex, candidateParentSet, data)
+                print(candidateParentSet, bic)
                 if (bic < 10000):
                     print("parent set:", candidateParentSet, bic)
                 scoreMap[toNumber(candidateParentSet)] = bic
@@ -934,8 +938,10 @@ class PruneTreeNode:
             startPoint.append(0)        
         
         bic, noiseParams = scoreParentSet(self.childNodeIndex, childParentSet, self.data, startPoint)
+        #print(bic)
+        #print(bestScoreAbove)
         if (bic < bestScoreAbove + self.X):
-            #print("Adding:", childParentSet, bic)
+            print("Adding:", childParentSet, bic)
             self.hashMap[self.__createNumber(childParentSet)] = bic
             output = "   " + str(-bic) + " " + str(len(childParentSet))
             output1 = str(len(childParentSet))
@@ -1008,57 +1014,7 @@ def score(data , nodeID, maxSize, X, outputfile, outputfile1):
 d = Data();
 d.readFromCSVFile(sys.argv[1])
 childParentSet = list(range(1,d.numberOfColumns))
-bic, noise1 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.1]*d.numberOfColumns)
-bic, noise2 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.3]*d.numberOfColumns)
-bic, noise3 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.5]*d.numberOfColumns)
-bic, noise4 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.7]*d.numberOfColumns)
-bic, noise5 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.9]*d.numberOfColumns)
 
-ferr = open(sys.argv[3]+"_noise", "r")
-lines=ferr.readlines()
-for l in lines:
-    if l[0] =="0":
-        np = [float(i) for i in l.split()]
-        nps=np[2::2]
-err1 = 0
-err2 = 0
-err3 = 0
-err4 = 0
-err5 = 0
-
-for i in range(0,len(nps)):
-    err1 += abs(nps[i] - noise1[i+1])/nps[i]
-    err2 += abs(nps[i] - noise2[i+1])/nps[i]
-    err3 += abs(nps[i] - noise3[i+1])/nps[i]
-    err4 += abs(nps[i] - noise4[i+1])/nps[i]
-    err5 += abs(nps[i] - noise5[i+1])/nps[i]
-errs = [err1,err2,err3,err4,err5]
-noises = [noise1, noise2, noise3, noise4, noise5]
-err=min(errs)
-#print(err)
-best = errs.index(err)
-bestnoise=noises[best]
-outfile1 = sys.argv[3] + "_" + sys.argv[2] + "_" + sys.argv[4] + "_noise"
-fo1 = open(outfile1,"w+")
-output1 = str(len(childParentSet))
-
-for c in childParentSet:
-    output1 = output1 + " " + str(c)
-
-for c in childParentSet:
-    output1 = output1 + " " + str(bestnoise[c])
-
-fo1.write(output1 + "\n") 
-
-fo1.close() 
-f=open("ERR_GD_"+ str(len(childParentSet)+1) + "_" + str(d.numberOfRows), "a+")
-f.write(str(err/len(nps)))
-f.write("\n")
-f.close()
-
-sys.exit(0)
-#for i in range(d.numberOfColumns):
-#    print("BIC for ", i, " with empty parent set: ", scoreNodeWithEmptyParentSet(i,d))
 outfile = sys.argv[3] + "_" + sys.argv[2] + "_" + sys.argv[4]
 outfile1 = sys.argv[3] + "_" + sys.argv[2] + "_" + sys.argv[4] + "_noise"
 print(outfile)
@@ -1067,7 +1023,76 @@ fo1 = open(outfile1,"w+")
 fo.close() 
 fo1.close()  
 bf = log(int(sys.argv[4]))
+#bic, noise1 = scoreParentSet(4,[3,13,20],d, [0]*21)
+#print(bic)
+#print(noise1)
+#bic, noise1 = scoreParentSet(4,[3,13,20],d, [0.1]*21)
+#print(bic)
+#print(noise1)
+#bic, noise1 = scoreParentSet(4,[3,13,20],d, [0.3]*21)
+#print(bic)
+#print(noise1)
+#bic, noise1 = scoreParentSet(4,[3,13,20],d, [0.5]*21)
+#print(bic)
+#print(noise1)
+#bic, noise1 = scoreParentSet(4,[3,13,20],d, [0.7]*21)
+#print(bic)
+#print(noise1)
+
+#sys.exit(0)
 score(d, int(sys.argv[2]), d.numberOfRows, bf, outfile, outfile1)
+
+
+#bic, noise1 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.1]*d.numberOfColumns)
+#bic, noise2 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.3]*d.numberOfColumns)
+#bic, noise3 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.5]*d.numberOfColumns)
+#bic, noise4 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.7]*d.numberOfColumns)
+#bic, noise5 = scoreParentSet(0,list(range(1,d.numberOfColumns)),d, [0.9]*d.numberOfColumns)
+
+#ferr = open(sys.argv[3]+"_noise", "r")
+#lines=ferr.readlines()
+#for l in lines:
+#    if l[0] =="0":
+#        np = [float(i) for i in l.split()]
+#        nps=np[2::2]
+#err1 = 0
+#err2 = 0
+#err3 = 0
+#err4 = 0
+#err5 = 0
+
+#for i in range(0,len(nps)):
+#    err1 += abs(nps[i] - noise1[i+1])/nps[i]
+#    err2 += abs(nps[i] - noise2[i+1])/nps[i]
+#    err3 += abs(nps[i] - noise3[i+1])/nps[i]
+#    err4 += abs(nps[i] - noise4[i+1])/nps[i]
+#    err5 += abs(nps[i] - noise5[i+1])/nps[i]
+#errs = [err1,err2,err3,err4,err5]
+#noises = [noise1, noise2, noise3, noise4, noise5]
+#err=min(errs)
+#print(err)
+#best = errs.index(err)
+#bestnoise=noises[best]
+#outfile1 = sys.argv[3] + "_" + sys.argv[2] + "_" + sys.argv[4] + "_noise"
+#fo1 = open(outfile1,"w+")
+#output1 = str(len(childParentSet))
+
+#for c in childParentSet:
+#    output1 = output1 + " " + str(c)
+
+#for c in childParentSet:
+#    output1 = output1 + " " + str(bestnoise[c])
+
+#fo1.write(output1 + "\n") 
+
+#fo1.close() 
+#f=open("ERR_GD_"+ str(len(childParentSet)+1) + "_" + str(d.numberOfRows), "a+")
+#f.write(str(err/len(nps)))
+#f.write("\n")
+#f.close()
+
+#sys.exit(0)
+#score(d, int(sys.argv[2]), d.numberOfRows, bf, outfile, outfile1)
 #scoreNode(int(sys.argv[2]), d, d.numberOfRows)
 #print("Done scoring")
 
